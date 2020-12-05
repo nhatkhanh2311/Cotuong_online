@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFEAAD">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="20dp">
+
+        <TextView
+            android:id="@+id/competitor"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:textColor="#000"
+            android:textStyle="italic"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/competitor_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/board"
+        android:layout_width="350dp"
+        android:layout_height="390dp"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        android:background="@drawable/board"
+        android:layout_gravity="center"
+        android:numColumns="9" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="20dp">
+
+        <TextView
+            android:id="@+id/me"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:textColor="#000"
+            android:textStyle="italic"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/me_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/chat"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:background="#FFF" />
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:background="#FFFEF4"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/enter_chat"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:hint="Enter chat here"/>
+
+        <ImageButton
+            android:id="@+id/send"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/send"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/ready"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ready"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginTop="100dp"/>
+
+</LinearLayout>
