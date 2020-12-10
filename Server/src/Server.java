@@ -36,7 +36,7 @@ class Client extends Thread
     {
         try
         {
-            String username = null;
+            String username;
             DataInputStream dis = new DataInputStream(soc.getInputStream());
             DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
             while (true)
@@ -51,6 +51,7 @@ class Client extends Thread
                         String result = Game.Game(sv, soc, username);
                         dos.writeUTF(result);
                         if (result.equals("ok2")) Game.Xuly();
+                        break;
                     }
                 }   else if (code[0].equals("dangky"))
                 {

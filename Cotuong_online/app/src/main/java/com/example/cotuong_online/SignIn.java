@@ -1,8 +1,11 @@
 package com.example.cotuong_online;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.content.AsyncTaskLoader;
 
+import android.content.AsyncQueryHandler;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -17,10 +20,8 @@ import java.net.Socket;
 public class SignIn extends AppCompatActivity
 {
     public Socket soc;
-    private String st;
     private EditText user, pass;
     private ImageButton signin, signup;
-    private int ok;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,25 +38,7 @@ public class SignIn extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                String username = user.getText().toString().trim();
-                String password = pass.getText().toString().trim();
-                ok = 0;
-                new ClientThread(username, password).start();
-                while (ok == 0) continue;
-                if (st.equals("ok2"))
-                {
-                    Intent intent = new Intent(SignIn.this, Room.class);
-                    startActivity(intent);
-                    Toast.makeText(SignIn.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                }   else if (st.equals("ok1"))
-                {
-                    Intent intent = new Intent(SignIn.this, Watting.class);
-                    startActivity(intent);
-                    Toast.makeText(SignIn.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                }   else
-                {
-                    Toast.makeText(SignIn.this, "Sai tên đăng nhập hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
-                }
+                new ClientThread().execute();
             }
         });
         signup.setOnClickListener(new View.OnClickListener()
@@ -68,25 +51,52 @@ public class SignIn extends AppCompatActivity
             }
         });
     }
-    class ClientThread extends Thread
+    class ClientThread extends AsyncTask<Void, Void, Void>
     {
-        String username, password;
-        public ClientThread(String username, String password)
+        private String username = "", password = "", st;
+        @Override
+        protected void onPreExecute()
         {
-            this.username = username;
-            this.password = password;
+            super.onPreExecute();
+            username = user.getText().toString().trim();
+            password = pass.getText().toString().trim();
         }
         @Override
-        public void run()
+        protected Void doInBackground(Void... voids)
         {
             try
             {
-                DataInputStream dis = new DataInputStream(soc.getInputStream());
-                DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
-                dos.writeUTF("dangnhap#" + username + "#" + password);
-                st = dis.readUTF();
-                ok = 1;
+                if (!username.equals("") && !password.equals(""))
+                {
+                    DataInputStream dis = new DataInputStream(soc.getInputStream());
+                    DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
+                    dos.writeUTF("dangnhap#" + username + "#" + password);
+                    st = dis.readUTF();
+                }
             }   catch (Exception e) {}
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void aVoid)
+        {
+            super.onPostExecute(aVoid);
+            if (username.equals("") || password.equals(""))
+            {
+                Toast.makeText(SignIn.this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+            }   else if (st.equals("ok2"))
+            {
+                Intent intent = new Intent(SignIn.this, Room.class);
+                startActivity(intent);
+                Toast.makeText(SignIn.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+            }   else if (st.equals("ok1"))
+            {
+                Intent intent = new Intent(SignIn.this, Watting.class);
+                startActivity(intent);
+                Toast.makeText(SignIn.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+            }   else
+            {
+                Toast.makeText(SignIn.this, "Sai tên đăng nhập hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

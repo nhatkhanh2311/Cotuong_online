@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity
     public DataOutputStream dos;
     public DataInputStream dis;
     private ImageButton tologin, playoff;
-    private String ip;
+    private EditText get_ip;
     private int ok;
 
     @Override
@@ -46,20 +47,12 @@ public class MainActivity extends AppCompatActivity
                 DialogIP();
             }
         });
-        playoff.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-
-            }
-        });
     }
     private void DialogIP()
     {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.input_ip);
-        final EditText get_ip = dialog.findViewById(R.id.ip);
+        get_ip = dialog.findViewById(R.id.ip);
         Button connect = dialog.findViewById(R.id.connect);
         Button cancel = dialog.findViewById(R.id.cancel);
         connect.setOnClickListener(new View.OnClickListener()
@@ -67,17 +60,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                ok = 0;
-                ip = get_ip.getText().toString().trim();
-                new ClientThread(ip).start();
-                while (ok == 0) continue;
-                if (ok == 1)
-                {
-                    instance = MainActivity.this;
-                    Intent intent = new Intent(MainActivity.this, SignIn.class);
-                    startActivity(intent);
-                    Toast.makeText(MainActivity.this, "Kết nối server thành công!", Toast.LENGTH_SHORT).show();
-                }   else Toast.makeText(MainActivity.this, "Không thể kết nối server!", Toast.LENGTH_SHORT).show();
+                new ClientThread().execute();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener()
@@ -90,15 +73,18 @@ public class MainActivity extends AppCompatActivity
         });
         dialog.show();
     }
-    class ClientThread extends Thread
+    class ClientThread extends AsyncTask<Void, Void, Void>
     {
-        String ip;
-        public ClientThread(String ip)
+        private String ip;
+        @Override
+        protected void onPreExecute()
         {
-            this.ip = ip;
+            super.onPreExecute();
+            ok = 0;
+            ip = get_ip.getText().toString().trim();
         }
         @Override
-        public void run()
+        protected Void doInBackground(Void... voids)
         {
             try
             {
@@ -107,6 +93,19 @@ public class MainActivity extends AppCompatActivity
                 dos = new DataOutputStream(soc.getOutputStream());
                 ok = 1;
             }   catch (Exception e) { ok = 2; }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void aVoid)
+        {
+            super.onPostExecute(aVoid);
+            if (ok == 1)
+            {
+                instance = MainActivity.this;
+                Intent intent = new Intent(MainActivity.this, SignIn.class);
+                startActivity(intent);
+                Toast.makeText(MainActivity.this, "Kết nối server thành công!", Toast.LENGTH_SHORT).show();
+            }   else Toast.makeText(MainActivity.this, "Không thể kết nối server!", Toast.LENGTH_SHORT).show();
         }
     }
     public Socket getSocket()
