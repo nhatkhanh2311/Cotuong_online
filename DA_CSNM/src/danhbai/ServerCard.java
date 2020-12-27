@@ -36,7 +36,9 @@ public class ServerCard{
 			for(Room r : Rooms)
 				if(r.name.contains(find))
 					rooms+= "-"+r.name;
-			rooms=rooms.substring(2);
+			if(rooms.length() >2)
+				rooms=rooms.substring(2);
+			
 			return rooms;
 		}
 	}
@@ -56,23 +58,29 @@ class Lobby extends Thread{
 			ProPlayer pl = null;
 			DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
 			dos.writeUTF(sv.getRoomsName(""));
+			
 			DataInputStream dis = new DataInputStream(soc.getInputStream());
 			String z = dis.readUTF();
 			String[] z_split = z.split("-");
+			
 			if(z_split[0].equals("login")) {
 				username = z_split[1];
 				pl = new ProPlayer(username);
 				System.out.println(pl.Name+" logged in");
 			}
+			
 			boolean flag = true;
 			while(flag) {
 				z = dis.readUTF();
 				z_split = z.split("-");
 				if(z_split[0].equals("new")) {
+					
 					Room t = new Room(sv, soc, pl, z_split[1]);
 					sv.Rooms.add(t);
 					System.out.println("Create "+t.name);
+					
 					flag = false;
+					
 					t.start();
 				}
 				else if(z_split[0].equals("join")) {

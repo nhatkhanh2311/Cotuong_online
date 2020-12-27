@@ -11,7 +11,7 @@ public class Room extends Thread{
 	static int countid = 1;
 	ServerCard server;
 	ArrayList<Socket> PlayerSocket = new ArrayList<Socket>();
-	String name;
+	public String name;
 	int ID;
 	String currentPlay;
 	ArrayList<ProPlayer> Players = new ArrayList<ProPlayer>();
@@ -21,14 +21,20 @@ public class Room extends Thread{
 	ArrayList<String> FinishedPlayer = new ArrayList<String>();
 	boolean flag = true;
 	
+	
+	
 	public Room(ServerCard server, Socket soc, ProPlayer pl, String name){
 		this.server = server;
 		PlayerSocket.add(soc);
 		Players.add(pl);
 		this.name = name+"'s Room";
 		this.ID = countid++;
+		
 		Client cli = new Client(server, this, soc, pl);
+		
 		cli.start();
+		
+		
 	}
 	public void joinRoom(Socket soc, ProPlayer pl) {
 		if(PlayerSocket.size()<4) {
@@ -73,6 +79,7 @@ class Client extends Thread{
 		this.room = r;
 		this.player = pl;
 		flag = true;
+		
 	}
 	
 	public void run() {

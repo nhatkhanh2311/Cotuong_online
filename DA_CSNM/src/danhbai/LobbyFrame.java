@@ -39,18 +39,7 @@ public class LobbyFrame extends JFrame implements Runnable{
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					lobbyFrame frame = new lobbyFrame("localhost", "username");
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					System.out.println(e);
-//				}
-//			}
-//		});
-//	}
+
 
 	/**
 	 * Create the frame.
@@ -64,7 +53,10 @@ public class LobbyFrame extends JFrame implements Runnable{
 			part = receive.split("-");
 			dos =  new DataOutputStream(this.soc.getOutputStream());
 		}
-		catch(Exception e){		}
+		catch(Exception e){
+			
+		}
+		
 		this.setFocusable(true);
 		setTitle("Welcome "+this.name);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,6 +70,7 @@ public class LobbyFrame extends JFrame implements Runnable{
 		JList list = new JList(part);
 		list.setPreferredSize(new Dimension(380,230));
 		JButton btnNewRoom = new JButton("New Room");
+		//-------------------------------------------
 		btnNewRoom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{

@@ -12,9 +12,12 @@ public class ProPlayer {
 	public int ID;
 	public Card[] myDesk = new Card[13];
 	public boolean isMyTurn = false;
+	
 	public ProPlayer(String Name){
 		this.Name = Name;
 	}
+	
+	
 	public String Display() {
 		String s="";
 		for(int i=0;i<13;i++){			

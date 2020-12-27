@@ -6,7 +6,7 @@ public class Desk {
 	Card[] Desk = new Card[52];
 	String[] Set = {"Spades", "Clubs", "Diamonds", "Hearts"};
 	String[] Value = {"3","4","5","6","7","8","9","10","Jack","Queen","King","Ace","2"};
-	Desk(){
+	Desk(){	
 		for(int i=0;i<52;i++){
 			Desk[i] = new Card(i);
 		}
@@ -30,12 +30,13 @@ public class Desk {
 	public void Display(){
 		for(int i=0;i<52;i++){
 			String ten = "";
-			ten+= Value[Desk[i].ID/4]+" of "+Set[Desk[i].ID%4];
+			ten = Value[Desk[i].ID/4]+" of "+Set[Desk[i].ID%4];
 			System.out.println(ten);
 		}
 	}
+	
 //	public static void main(String[] args) {
-//		Deck z = new Deck();
+//		Desk z = new Desk();
 //		z.Shuffle();
 //		z.Display();
 //	}

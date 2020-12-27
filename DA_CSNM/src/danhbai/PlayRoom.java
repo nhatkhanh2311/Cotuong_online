@@ -32,8 +32,8 @@ import javax.imageio.ImageIO;
 @SuppressWarnings("serial")
 public class PlayRoom extends JFrame implements Runnable{
 
-	public Player player = new Player("Thinh") ;
-	String filePath = "D:\\java-oxygen\\GoUp\\png\\";
+	public Player player = new Player("Ln") ;
+	String filePath = "F:\\Files\\Do_an_mang\\DA_CSNM\\png\\";
 	Socket soc;
 	String name;
 	int playerInGame;
@@ -77,16 +77,18 @@ public class PlayRoom extends JFrame implements Runnable{
 
 	private void GUI() {
 		// TODO Auto-generated method stub
-		pn2=new Panel(new FlowLayout());
+		pn2 = new Panel(new GridLayout(2,1));
 		pn1 = new Panel(new GridLayout(1, 1));
 		pn = new Panel(new FlowLayout());
 		tf = new TextField();
-		tf.setPreferredSize(new Dimension(450,25));
+		tf.setPreferredSize(new Dimension(500,25));
 		btn_send = new Button("Send");
+		
 		result = new TextArea();
 		result.setEnabled(false);
-		result.setPreferredSize(new Dimension(500,210));
+		result.setPreferredSize(new Dimension(500,100));
 		pn.setBounds(screenSize.width*7/10, screenSize.height*7/10, 500, 250);
+	
 		pn2.add(tf);
 		pn2.add(btn_send);
 		pn1.add(result);
@@ -111,6 +113,8 @@ public class PlayRoom extends JFrame implements Runnable{
 		timeText.setBounds(screenSize.width*6/10, screenSize.height*16/20, 100, 100);
 		timeText.setFont(new Font("Tahoma", Font.PLAIN, 80));
 		timeText.setEditable(false);
+		
+		
 		timer = new Timer(1000, new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -177,7 +181,8 @@ public class PlayRoom extends JFrame implements Runnable{
 				if(count>0){
 					cardChoosing=Arrays.copyOfRange(tmp, 0, count);
 				}
-				if(currentMove == null || player.PlayCard(currentMove, cardChoosing)) {
+				//if(currentMove == null || player.PlayCard(currentMove, cardChoosing)) {
+				if( player.PlayCard(currentMove, cardChoosing)) {
 					currentMove = cardChoosing;
 					player.Pop(cardChoosing);
 					if(player.myDesk.length == 0) isFinish = true;

@@ -14,8 +14,8 @@ import java.net.Socket;
 
 public class Watting extends AppCompatActivity
 {
-    public Socket soc;
-    public TextView text;
+    private Socket soc;
+    private TextView text;
     private String st;
 
     @Override

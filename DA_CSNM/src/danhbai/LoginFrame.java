@@ -55,6 +55,7 @@ public class LoginFrame extends JFrame {
 		name_t.setColumns(10);
 		JButton login_btn = new JButton("Log in");
 		this.getRootPane().setDefaultButton(login_btn);
+		
 		login_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String name = name_t.getText();
@@ -70,8 +71,7 @@ public class LoginFrame extends JFrame {
 						dispose();
 					}
 					catch(Exception e){
-						JOptionPane.showMessageDialog(
-								new JFrame(), "Wrong IP address!!");
+						JOptionPane.showMessageDialog(new JFrame(), "Wrong IP address!!");
 					}
 				}
 				else {

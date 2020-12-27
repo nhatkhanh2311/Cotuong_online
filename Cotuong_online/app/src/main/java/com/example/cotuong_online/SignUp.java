@@ -16,7 +16,7 @@ import java.net.Socket;
 
 public class SignUp extends AppCompatActivity
 {
-    public Socket soc;
+    private Socket soc;
     private EditText user, pass, repass, email;
     private ImageButton signup;
 

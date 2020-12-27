@@ -25,9 +25,7 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity
 {
     public static MainActivity instance = null;
-    public Socket soc;
-    public DataOutputStream dos;
-    public DataInputStream dis;
+    private Socket soc;
     private ImageButton tologin, playoff;
     private EditText get_ip;
     private int ok;
@@ -89,8 +87,8 @@ public class MainActivity extends AppCompatActivity
             try
             {
                 soc = new Socket(ip, 9911);
-                dis = new DataInputStream(soc.getInputStream());
-                dos = new DataOutputStream(soc.getOutputStream());
+                DataInputStream dis = new DataInputStream(soc.getInputStream());
+                DataOutputStream dos = new DataOutputStream(soc.getOutputStream());
                 ok = 1;
             }   catch (Exception e) { ok = 2; }
             return null;

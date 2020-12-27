@@ -25,8 +25,7 @@ import java.util.Collections;
 
 public class Room extends AppCompatActivity
 {
-    public Socket soc;
-    private String me_name, competitor_name;
+    private Socket soc;
     private GridView board;
     private Button ready;
     private TextView me, competitor, me_time, competitor_time, chat;
@@ -143,6 +142,8 @@ public class Room extends AppCompatActivity
                         @Override
                         public void onTick(long millisUntilFinished)
                         {
+                            if (millisUntilFinished/1000 <= 10) me_time.setTextColor(Color.RED);
+                            else me_time.setTextColor(Color.BLACK);
                             me_time.setText(millisUntilFinished/1000 + "");
                         }
                         @Override

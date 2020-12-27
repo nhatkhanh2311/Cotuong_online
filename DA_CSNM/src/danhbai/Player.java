@@ -8,6 +8,7 @@ public class Player {
 	public int Money;
 	public Card[] myDesk = new Card[13];
 	public int isMyTurn = 0;
+	
 	public Player(String Name){
 		this.Name = Name;
 

@@ -19,7 +19,7 @@ import java.net.Socket;
 
 public class SignIn extends AppCompatActivity
 {
-    public Socket soc;
+    private Socket soc;
     private EditText user, pass;
     private ImageButton signin, signup;
 
